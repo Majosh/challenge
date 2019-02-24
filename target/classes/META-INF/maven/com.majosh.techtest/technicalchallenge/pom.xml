@@ -3,6 +3,12 @@
   <groupId>com.majosh.techtest</groupId>
   <artifactId>technicalchallenge</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <repositories>
+	<repository>
+	  <id>hibernatesqlite-maven</id>
+  	  <url>https://hibernate-sqlite.googlecode.com/svn/trunk/mavenrepo</url>
+	</repository>
+  </repositories>
   
   <dependencies>
     <!-- opencsv -->
@@ -18,7 +24,7 @@
         <artifactId>hibernate-core</artifactId>
         <version>4.1.4.Final</version>
     </dependency>
-
+    
     <!-- SQLite JDBC library -->
     <dependency>
         <groupId>org.xerial</groupId>

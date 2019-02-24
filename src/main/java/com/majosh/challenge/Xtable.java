@@ -1,7 +1,17 @@
 package com.majosh.challenge;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="tableX")
 public class Xtable {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private String columnA,
 	               columnB,
 	               columnC,
@@ -134,8 +144,33 @@ public class Xtable {
 	public void setColumnJ(String columnJ) {
 		this.columnJ = columnJ;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Xtable [columnA=" + columnA + ", columnB=" + columnB + ", columnC=" + columnC + ", columnD=" + columnD
+				+ ", columnE=" + columnE + ", columnF=" + columnF + ", columnG=" + columnG + ", columnH=" + columnH
+				+ ", columnI=" + columnI + ", columnJ=" + columnJ + "]";
+	}
 	
+	public void cleanComma() {
+		this.columnA = this.columnA.contains(",") ? "\"" + this.columnA +"\"" : this.columnA;
+		this.columnB = this.columnB.contains(",") ? "\"" + this.columnB +"\"" : this.columnB;
+		this.columnC = this.columnC.contains(",") ? "\"" + this.columnC +"\"" : this.columnC;
+		this.columnD = this.columnD.contains(",") ? "\"" + this.columnD +"\"" : this.columnD;
+		this.columnE = this.columnE.contains(",") ? "\"" + this.columnE +"\"" : this.columnE;
+		this.columnF = this.columnF.contains(",") ? "\"" + this.columnF +"\"" : this.columnF;
+		this.columnG = this.columnG.contains(",") ? "\"" + this.columnG +"\"" : this.columnG;
+		this.columnH = this.columnH.contains(",") ? "\"" + this.columnH +"\"" : this.columnH;
+		this.columnI = this.columnI.contains(",") ? "\"" + this.columnI +"\"" : this.columnI;
+		this.columnJ = this.columnJ.contains(",") ? "\"" + this.columnJ +"\"" : this.columnJ;
+	}
 	
-	
-	
+	public boolean isAllFieldsValid() {
+		return ! this.columnA.isEmpty() && !this.columnB.isEmpty() &&
+				! this.columnC.isEmpty() && !this.columnD.isEmpty() &&
+				! this.columnE.isEmpty() && !this.columnF.isEmpty() &&
+				! this.columnG.isEmpty() && !this.columnH.isEmpty() &&
+				! this.columnI.isEmpty() && !this.columnJ.isEmpty() ;
+	}
 }
