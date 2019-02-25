@@ -19,7 +19,6 @@ public class TechnicalTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

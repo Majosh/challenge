@@ -9,11 +9,10 @@ import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.majosh.challenge.TechnicalTest;
+//import com.majosh.challenge.TechnicalTest;
 import com.majosh.challenge.Xtable;
 import com.opencsv.CSVReader;
 
@@ -29,13 +28,12 @@ public class Process {
 	
 	public Process() {
 		this.service = new XtableService();
-		this.badData = new ArrayList();
-		reader = null;
+		this.badData = new ArrayList<String[]>();
 		reader = null;
 	}
 	
 	public void readCsv(File file) throws FileNotFoundException, URISyntaxException {
-		reader = null;
+		
 		reader = new CSVReader(
 				new FileReader(file));	
 	}
@@ -51,19 +49,14 @@ public class Process {
 		
 		while((line = reader.readNext()) != null && line.length > 1) {
 			total++;
-			if(line.length < 10 || line.length> 10) {
-				this.badData.add(line);
-				failed++;
-			}else {
+			if(line.length == 10) {
 				Xtable row = new Xtable(line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9]);
 				row.cleanComma();
-				if(row.isAllFieldsValid()) {
 					this.service.saveRecord(row);
 					success++;
-				}else {
-					this.badData.add(line);
-					failed++;
-				}
+			}else {
+				this.badData.add(line);
+				failed++;
 			}
 		}
 		this.service.commitTransaction();
@@ -73,63 +66,57 @@ public class Process {
 	public void logBadRecord() throws IOException, URISyntaxException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 		Date d = new Date(System.currentTimeMillis());
-		
-		File f = new File(TechnicalTest.class.getResource("baddata").toURI());
-		if(f.exists() && f.isDirectory()) { 
-			System.out.println("baddata folder was found");
-			FileWriter fw = new FileWriter("bad-data-"+sdf.format(d)+".csv");
-			PrintWriter out = new PrintWriter(fw);
+		 
+		FileWriter fw = new FileWriter("bad-data-"+sdf.format(d)+".csv");
+		PrintWriter out = new PrintWriter(fw);
 
-			out.print("A");
-			out.print(",");
-			out.print("B");
-			out.print(",");
-			out.print("C");
-			out.print(",");
-			out.print("D");
-			out.print(",");
-			out.print("E");
-			out.print(",");
-			out.print("F");
-			out.print(",");
-			out.print("G");
-			out.print(",");
-			out.print("H");
-			out.print(",");
-			out.print("I");
-			out.print(",");
-			out.println("J");
-			
-			for(String[] data : this.badData) {
-				int ctr = 0;
-				for(String datum: data) {
-					
-					if(ctr>1) {
-						out.print(",");
-					}
-					
-					if(ctr == data.length - 1) {
-						out.println(datum);
-					}else {
-						out.print(datum);
-					}
-					
-					ctr++;
+		out.print("A");
+		out.print(",");
+		out.print("B");
+		out.print(",");
+		out.print("C");
+		out.print(",");
+		out.print("D");
+		out.print(",");
+		out.print("E");
+		out.print(",");
+		out.print("F");
+		out.print(",");
+		out.print("G");
+		out.print(",");
+		out.print("H");
+		out.print(",");
+		out.print("I");
+		out.print(",");
+		out.println("J");
+		
+		for(String[] data : this.badData) {
+			int ctr = 1;
+			for(String datum: data) {
+				
+				if(ctr>=2) {
+					out.print(",");
 				}
+				
+				if(ctr == data.length) {
+					out.println(datum);
+				}else {
+					out.print(datum);
+				}
+				
+				ctr++;
 			}
-			
-			  
-		   //Flush the output to the file
-		   out.flush();
-		       
-		   //Close the Print Writer
-		   out.close();
-		       
-		   //Close the File Writer
-		   fw.close();       
-		   System.out.println("Closing");
 		}
-		System.out.println("End of badRecord");
+		
+		  
+	   //Flush the output to the file
+	   out.flush();
+	       
+	   //Close the Print Writer
+	   out.close();
+	       
+	   //Close the File Writer
+	   fw.close();
 		
 	}
 	

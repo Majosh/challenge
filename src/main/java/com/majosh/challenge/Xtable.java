@@ -166,11 +166,4 @@ public class Xtable {
 		this.columnJ = this.columnJ.contains(",") ? "\"" + this.columnJ +"\"" : this.columnJ;
 	}
 	
-	public boolean isAllFieldsValid() {
-		return ! this.columnA.isEmpty() && !this.columnB.isEmpty() &&
-				! this.columnC.isEmpty() && !this.columnD.isEmpty() &&
-				! this.columnE.isEmpty() && !this.columnF.isEmpty() &&
-				! this.columnG.isEmpty() && !this.columnH.isEmpty() &&
-				! this.columnI.isEmpty() && !this.columnJ.isEmpty() ;
-	}
 }
